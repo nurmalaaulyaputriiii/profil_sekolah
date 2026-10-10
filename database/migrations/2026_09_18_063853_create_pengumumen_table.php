@@ -14,18 +14,16 @@ return new class extends Migration
         Schema::create('pengumumen', function (Blueprint $table) {
             $table->increments('id_pengumuman');
             $table->string('judul', 50);
+            $table->text('slug')->unique();
             $table->text('isi');
             $table->date('tanggal');
             $table->enum('status', ['Publish', 'Draft']);
-
             $table->unsignedInteger('id_user');
-
             $table->foreign('id_user')
                 ->references('id_user')
                 ->on('user')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

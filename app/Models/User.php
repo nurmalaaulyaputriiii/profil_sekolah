@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Model
+class User extends Authenticatable
 {
     protected $table = 'user';
 
@@ -14,6 +14,8 @@ class User extends Model
     public $incrementing = true;
 
     protected $keyType = 'int';
+
+    public $timestamps = true;
 
     protected $fillable = [
         'username',

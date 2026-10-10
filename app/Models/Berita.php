@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
 class Berita extends Model
 {
     protected $table = 'beritas';
@@ -17,6 +18,7 @@ class Berita extends Model
 
     protected $fillable = [
         'judul',
+        'slug',
         'isi',
         'tanggal',
         'gambar',

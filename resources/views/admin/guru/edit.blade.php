@@ -7,18 +7,14 @@
     {{-- HEADER --}}
     <div class="mb-4">
         <h1 class="h3 mb-1 text-dark fw-bold">Edit Data Guru</h1>
-        <p class="text-muted mb-0">
-            Perbarui informasi data guru.
-        </p>
+        <p class="text-muted mb-0">Perbarui informasi data guru.</p>
     </div>
 
     {{-- FORM EDIT --}}
     <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
 
-            <form action="{{ route('admin.guru.update', $guru->id_guru) }}"
-                  method="POST"
-                  enctype="multipart/form-data">
+            <form action="{{ route('admin.guru.update', ['id' => Crypt::encryptString($guru->id_guru)]) }}" method="POST" enctype="multipart/form-data">
 
                 @csrf
                 @method('PUT')
@@ -40,9 +36,7 @@
                     >
 
                     @error('nama_guru')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -63,9 +57,7 @@
                     >
 
                     @error('nip')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -86,9 +78,7 @@
                     >
 
                     @error('mapel')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -109,15 +99,7 @@
                             >
                         @else
                             <div
-                                style="
-                                    width: 120px;
-                                    height: 120px;
-                                    background: #eee;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    border-radius: 6px;
-                                "
+                                style="width: 120px; height: 120px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 6px;"
                             >
                                 <i class="bi bi-person fs-1 text-muted"></i>
                             </div>
@@ -144,17 +126,13 @@
                     </small>
 
                     @error('foto')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 {{-- BUTTON --}}
                 <div class="d-flex gap-2">
-
-                    <a href="{{ route('admin.guru.guru') }}"
-                       class="btn btn-secondary">
+                    <a href="{{ route('admin.guru.guru') }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left me-1"></i>
                         Kembali
                     </a>
@@ -163,7 +141,6 @@
                         <i class="bi bi-save me-1"></i>
                         Simpan Perubahan
                     </button>
-
                 </div>
 
             </form>

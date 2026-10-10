@@ -4,21 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class BeritaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+
         $berita = Berita::with('user')
-            ->orderBy('id_berita', 'desc')
+            ->when($search, function ($query, $search) {
+                $query->where('judul', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.berita.berita', compact('berita'));
+        return view('admin.berita.berita', compact('berita', 'search'));
     }
 
     /**
@@ -36,6 +43,9 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
+        $slug = Str::slug($request->judul);
+        $request->merge(['slug' => $slug]);
+
         $request->validate([
             'judul' => 'required|string|max:50',
             'isi' => 'required|string',
@@ -43,6 +53,7 @@ class BeritaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:Publish,Draft',
             'id_user' => 'required|exists:user,id_user',
+            'slug' => 'required|unique:beritas,slug'
         ]);
 
         $data = $request->except('gambar');
@@ -64,6 +75,12 @@ class BeritaController extends Controller
      */
     public function show(string $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $berita = Berita::with('user')
             ->findOrFail($id);
 
@@ -75,6 +92,12 @@ class BeritaController extends Controller
      */
     public function edit(string $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $berita = Berita::findOrFail($id);
         $users = User::all();
 
@@ -89,6 +112,12 @@ class BeritaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $berita = Berita::findOrFail($id);
 
         $request->validate([
@@ -103,7 +132,6 @@ class BeritaController extends Controller
         $data = $request->except('gambar');
 
         if ($request->hasFile('gambar')) {
-
             if ($berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
             }
@@ -124,6 +152,12 @@ class BeritaController extends Controller
      */
     public function destroy(string $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $berita = Berita::findOrFail($id);
 
         if ($berita->gambar) {

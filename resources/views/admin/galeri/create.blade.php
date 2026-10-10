@@ -4,132 +4,167 @@
 
 <div class="container-fluid py-4">
 
-    <div class="mb-4">
-        <h4 class="fw-bold mb-1">Tambah Galeri</h4>
-        <p class="text-muted mb-0">
-            Tambahkan foto atau video kegiatan sekolah
-        </p>
-    </div>
+<div class="mb-4">
+    <h4 class="fw-bold mb-1">Tambah Galeri</h4>
+    <p class="text-muted mb-0">
+        Tambahkan foto atau video baru
+    </p>
+</div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
+<div class="card border-0 shadow-sm">
 
-            <form action="{{ route('admin.galeri.store') }}"
-                  method="POST"
-                  enctype="multipart/form-data">
+    <div class="card-body p-4">
 
-                @csrf
+        <form action="{{ route('admin.galeri.store') }}"
+              method="POST"
+              enctype="multipart/form-data">
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Judul</label>
-                    <input type="text"
-                           name="judul"
-                           class="form-control"
-                           value="{{ old('judul') }}"
-                           maxlength="50"
-                           required>
+            @csrf
 
-                    @error('judul')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+            <div class="mb-3">
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        Keterangan
-                    </label>
+                <label class="form-label fw-semibold">
+                    Judul
+                </label>
 
-                    <textarea name="keterangan"
-                              rows="5"
-                              class="form-control"
-                              required>{{ old('keterangan') }}</textarea>
+                <input type="text"
+                       name="judul"
+                       class="form-control"
+                       value="{{ old('judul') }}"
+                       maxlength="50"
+                       required>
 
-                    @error('keterangan')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Kategori</label>
-
-                    <select name="kategori"
-                            class="form-select"
-                            required>
-
-                        <option value="">-- Pilih Kategori --</option>
-
-                        <option value="Foto"
-                            {{ old('kategori') == 'Foto' ? 'selected' : '' }}>
-                            Foto
-                        </option>
-
-                        <option value="Video"
-                            {{ old('kategori') == 'Video' ? 'selected' : '' }}>
-                            Video
-                        </option>
-
-                    </select>
-
-                    @error('kategori')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        File Foto / Video
-                    </label>
-
-                    <input type="file"
-                           name="file"
-                           class="form-control"
-                           accept="image/*,video/mp4,video/quicktime,video/x-msvideo"
-                           required>
-
-                    <small class="text-muted">
-                        Format foto JPG, PNG, WEBP atau video MP4, MOV, AVI.
-                        Maksimal 20 MB.
+                @error('judul')
+                    <small class="text-danger">
+                        {{ $message }}
                     </small>
+                @enderror
 
-                    @error('file')
-                        <small class="text-danger d-block">
-                            {{ $message }}
-                        </small>
-                    @enderror
-                </div>
+            </div>
 
-                <div class="mb-4">
-                    <label class="form-label fw-semibold">Tanggal</label>
+            <div class="mb-3">
 
-                    <input type="date"
-                           name="tanggal"
-                           class="form-control"
-                           value="{{ old('tanggal') }}"
-                           required>
+                <label class="form-label fw-semibold">
+                    Keterangan
+                </label>
 
-                    @error('tanggal')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+                <textarea name="keterangan"
+                          rows="5"
+                          class="form-control"
+                          required>{{ old('keterangan') }}</textarea>
 
-                <div class="d-flex gap-2">
+                @error('keterangan')
+                    <small class="text-danger">
+                        {{ $message }}
+                    </small>
+                @enderror
 
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i>
-                        Simpan
-                    </button>
+            </div>
 
-                    <a href="{{ route('admin.galeri.galeri') }}"
-                       class="btn btn-secondary">
-                        Kembali
-                    </a>
+            <div class="mb-3">
 
-                </div>
+                <label class="form-label fw-semibold">
+                    File
+                </label>
 
-            </form>
+                <input type="file"
+                       name="file"
+                       class="form-control"
+                       accept="image/*,video/*"
+                       required>
 
-        </div>
+                <small class="text-muted">
+                    Foto: JPG, JPEG, PNG, WEBP.
+                    Video: MP4, MOV, AVI.
+                    Maksimal 20 MB.
+                </small>
+
+                @error('file')
+                    <small class="text-danger d-block">
+                        {{ $message }}
+                    </small>
+                @enderror
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label fw-semibold">
+                    Kategori
+                </label>
+
+                <select name="kategori"
+                        class="form-select"
+                        required>
+
+                    <option value="">
+                        -- Pilih Kategori --
+                    </option>
+
+                    <option value="Foto"
+                        {{ old('kategori') == 'Foto' ? 'selected' : '' }}>
+                        Foto
+                    </option>
+
+                    <option value="Video"
+                        {{ old('kategori') == 'Video' ? 'selected' : '' }}>
+                        Video
+                    </option>
+
+                </select>
+
+                @error('kategori')
+                    <small class="text-danger">
+                        {{ $message }}
+                    </small>
+                @enderror
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label fw-semibold">
+                    Tanggal
+                </label>
+
+                <input type="date"
+                       name="tanggal"
+                       class="form-control"
+                       value="{{ old('tanggal') }}"
+                       required>
+
+                @error('tanggal')
+                    <small class="text-danger">
+                        {{ $message }}
+                    </small>
+                @enderror
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-save me-1"></i>
+                    Simpan
+
+                </button>
+
+                <a href="{{ route('admin.galeri.galeri') }}"
+                   class="btn btn-secondary">
+
+                    Kembali
+
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
+
+</div>
 
 </div>
 

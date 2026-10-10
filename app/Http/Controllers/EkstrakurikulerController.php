@@ -5,38 +5,47 @@ namespace App\Http\Controllers;
 use App\Models\Ekstrakurikuler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class EkstrakurikulerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $ekstrakurikuler = Ekstrakurikuler::all();
+        $search = $request->search;
 
-        return view('admin.ektrakurikuler.ektrakurikuler', compact('ekstrakurikuler'));
+        $ekstrakurikuler = Ekstrakurikuler::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_ekskul', 'like', '%' . $search . '%')
+                    ->orWhere('pembina', 'like', '%' . $search . '%');
+            });
+        })
+        ->orderBy('id_ekskul', 'desc')
+        ->get();
+
+        return view(
+            'admin.ektrakurikuler.ektrakurikuler',
+            compact('ekstrakurikuler', 'search')
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.ektrakurikuler.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $slug = Str::slug($request->nama_ekskul);
+        $request->merge(['slug' => $slug]);
+
         $request->validate([
             'nama_ekskul' => 'required|string|max:40',
             'pembina' => 'required|string|max:40',
             'jadwal_latihan' => 'required|string|max:40',
             'deskripsi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'slug' => 'required|unique:ekstrakurikuler,slug'
         ]);
 
         $gambar = null;
@@ -48,6 +57,7 @@ class EkstrakurikulerController extends Controller
 
         Ekstrakurikuler::create([
             'nama_ekskul' => $request->nama_ekskul,
+            'slug' => $request->slug,
             'pembina' => $request->pembina,
             'jadwal_latihan' => $request->jadwal_latihan,
             'deskripsi' => $request->deskripsi,
@@ -59,11 +69,14 @@ class EkstrakurikulerController extends Controller
             ->with('success', 'Data ekstrakurikuler berhasil ditambahkan!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
 
         return view(
@@ -72,11 +85,16 @@ class EkstrakurikulerController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+
         $request->validate([
             'nama_ekskul' => 'required|string|max:40',
             'pembina' => 'required|string|max:40',
@@ -85,12 +103,9 @@ class EkstrakurikulerController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
-
         $gambar = $ekstrakurikuler->gambar;
 
         if ($request->hasFile('gambar')) {
-
             if ($ekstrakurikuler->gambar) {
                 Storage::disk('public')->delete(
                     $ekstrakurikuler->gambar
@@ -114,11 +129,14 @@ class EkstrakurikulerController extends Controller
             ->with('success', 'Data ekstrakurikuler berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
 
         if ($ekstrakurikuler->gambar) {

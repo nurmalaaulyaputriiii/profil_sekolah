@@ -1,0 +1,50 @@
+@extends('layouts.landing')
+@section('title', $ekstrakurikuler->nama_ekskul . ' - ' . ($profil->nama_sekolah ?? 'Profil Sekolah'))
+@section('content')
+<section class="py-5 bg-light">
+    <div class="container py-lg-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                @if (!empty($ekstrakurikuler->gambar))
+                    <img src="{{ asset('storage/' . $ekstrakurikuler->gambar) }}" alt="{{ $ekstrakurikuler->nama_ekskul }}" class="w-100 rounded-4 object-fit-cover" style="height:480px;">
+                @else
+                    <div class="w-100 rounded-4 bg-white d-flex align-items-center justify-content-center" style="height:480px;">
+                        <i class="bi bi-people text-secondary" style="font-size:6rem;"></i>
+                    </div>
+                @endif
+            </div>
+            <div class="col-lg-7">
+                <span class="text-primary fw-semibold text-uppercase small">Kegiatan Siswa</span>
+                <h1 class="fw-bold text-dark mt-2 mb-3">{{ $ekstrakurikuler->nama_ekskul }}</h1>
+                @if (!empty($ekstrakurikuler->jadwal_latihan))
+                    <p class="text-primary fw-semibold fs-5 mb-4">{{ $ekstrakurikuler->jadwal_latihan }}</p>
+                @endif
+                <div class="border-top pt-4">
+                    @if (!empty($ekstrakurikuler->pembina))
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:48px;height:48px;background:#eef3ff;color:#24458f;">
+                                <i class="bi bi-person-badge-fill"></i>
+                            </div>
+                            <div>
+                                <small class="text-secondary d-block mb-1">Pembina</small>
+                                <span class="fw-semibold text-dark">{{ $ekstrakurikuler->pembina }}</span>
+                            </div>
+                        </div>
+                    @endif
+                    @if (!empty($ekstrakurikuler->deskripsi))
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:48px;height:48px;background:#eef3ff;color:#24458f;">
+                                <i class="bi bi-info-circle-fill"></i>
+                            </div>
+                            <div>
+                                <small class="text-secondary d-block mb-1">Deskripsi</small>
+                                <p class="text-dark lh-lg mb-0">{{ $ekstrakurikuler->deskripsi }}</p>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection

@@ -3,65 +3,82 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profil;
-use App\Http\Requests\StoreprofilRequest;
-use App\Http\Requests\UpdateprofilRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProfilController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan halaman profil
     public function index()
     {
-        return view('admin.profil.profil');
+        $profil = Profil::first();
+
+        return view('admin.profil.profil', compact('profil'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Menampilkan form tambah atau edit
+    public function edit()
     {
-        //
+        $profil = Profil::first();
+
+        return view('admin.profil.edit', compact('profil'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreprofilRequest $request)
+    // Menyimpan data baru atau memperbarui data lama
+    public function update(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'nama_sekolah' => 'required|string|max:40',
+            'kepala_sekolah' => 'required|string|max:40',
+            'npsn' => 'required|string|max:10',
+            'alamat' => 'required|string',
+            'kontak' => 'required|string|max:15',
+            'visi_misi' => 'required|string',
+            'tahun_berdiri' => 'required|integer',
+            'deskripsi' => 'required|string',
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Profil $profil)
-    {
-        //
-    }
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Profil $profil)
-    {
-        //
-    }
+        // Ambil data profil yang sudah ada
+        $profil = Profil::first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateprofilRequest $request, Profil $profil)
-    {
-        //
-    }
+        // Jika belum ada, buat data baru
+        if (!$profil) {
+            $profil = new Profil();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Profil $profil)
-    {
-        //
+            // Kolom foto dan logo pada migration tidak nullable
+            $profil->foto = '';
+            $profil->logo = '';
+        }
+
+        // Upload foto sekolah
+        if ($request->hasFile('foto')) {
+            if ($profil->foto && Storage::disk('public')->exists($profil->foto)) {
+                Storage::disk('public')->delete($profil->foto);
+            }
+
+            $data['foto'] = $request->file('foto')
+                ->store('foto_profil', 'public');
+        }
+
+        // Upload logo sekolah
+        if ($request->hasFile('logo')) {
+            if ($profil->logo && Storage::disk('public')->exists($profil->logo)) {
+                Storage::disk('public')->delete($profil->logo);
+            }
+
+            $data['logo'] = $request->file('logo')
+                ->store('logo_profil', 'public');
+        }
+
+        // Isi data dan simpan
+        $profil->fill($data);
+        $profil->save();
+
+        return redirect()
+            ->route('admin.profil.profil')
+            ->with('success', 'Profil sekolah berhasil disimpan.');
     }
 }
-

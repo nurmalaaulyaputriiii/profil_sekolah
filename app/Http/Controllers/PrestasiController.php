@@ -5,85 +5,85 @@ namespace App\Http\Controllers;
 use App\Models\Prestasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class PrestasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $prestasis = Prestasi::orderBy('id_prestasi', 'desc')->get();
+        $search = $request->search;
 
-    return view('admin.prestasi.prestasi', compact('prestasis'));
+        $prestasis = Prestasi::when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_prestasi', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_ajaran', 'like', '%' . $search . '%');
+            });
+        })
+        ->orderBy('id_prestasi', 'desc')
+        ->get();
+
+        return view('admin.prestasi.prestasi', compact('prestasis', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
         return view('admin.prestasi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-       $request->validate([
-        'nama_prestasi' => 'required|string|max:100',
-        'deskripsi' => 'required|string',
-        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'tahun_ajaran' => 'required|string|max:20',
-    ]);
+        $slug = Str::slug($request->nama_prestasi);
+        $request->merge(['slug' => $slug]);
 
-    $foto = null;
+        $request->validate([
+            'nama_prestasi' => 'required|string|max:100',
+            'deskripsi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'tahun_ajaran' => 'required|string|max:20',
+            'slug' => 'required|unique:prestasis,slug'
+        ]);
 
-    if ($request->hasFile('foto')) {
-        $foto = $request->file('foto')->store('prestasi', 'public');
+        $foto = null;
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto')->store('prestasi', 'public');
+        }
+
+        Prestasi::create([
+            'nama_prestasi' => $request->nama_prestasi,
+            'slug' => $request->slug,
+            'deskripsi' => $request->deskripsi,
+            'foto' => $foto,
+            'tahun_ajaran' => $request->tahun_ajaran,
+        ]);
+
+        return redirect()
+            ->route('admin.prestasi.prestasi')
+            ->with('success', 'Data prestasi berhasil ditambahkan!');
     }
 
-    \App\Models\Prestasi::create([
-        'nama_prestasi' => $request->nama_prestasi,
-        'deskripsi' => $request->deskripsi,
-        'foto' => $foto,
-        'tahun_ajaran' => $request->tahun_ajaran,
-    ]);
-
-    return redirect()
-        ->route('admin.prestasi.prestasi')
-        ->with('success', 'Data prestasi berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Prestasi $prestasi)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        //
-       $prestasi = Prestasi::findOrFail($id);
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $prestasi = Prestasi::findOrFail($id);
 
         return view('admin.prestasi.edit', compact('prestasi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $prestasi = Prestasi::findOrFail($id);
 
         $request->validate([
@@ -93,21 +93,17 @@ class PrestasiController extends Controller
             'tahun_ajaran' => 'required|string|max:20',
         ]);
 
-        $data = $request->only([
-            'nama_prestasi',
-            'deskripsi',
-            'tahun_ajaran',
-        ]);
+        $data = [
+            'nama_prestasi' => $request->nama_prestasi,
+            'deskripsi' => $request->deskripsi,
+            'tahun_ajaran' => $request->tahun_ajaran,
+        ];
 
-        // JIKA ADA FOTO BARU
         if ($request->hasFile('foto')) {
-
-            // HAPUS FOTO LAMA
             if ($prestasi->foto) {
                 Storage::disk('public')->delete($prestasi->foto);
             }
 
-            // SIMPAN FOTO BARU
             $data['foto'] = $request->file('foto')
                 ->store('prestasi', 'public');
         }
@@ -119,15 +115,16 @@ class PrestasiController extends Controller
             ->with('success', 'Data prestasi berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Prestasi $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
         $prestasi = Prestasi::findOrFail($id);
 
-        // HAPUS FOTO
         if ($prestasi->foto) {
             Storage::disk('public')->delete($prestasi->foto);
         }

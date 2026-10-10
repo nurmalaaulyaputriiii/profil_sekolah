@@ -4,17 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $siswa = Siswa::orderBy('nama_siswa', 'asc')->paginate(10);
+        $search = $request->search;
 
-        return view('admin.siswa.siswa', compact('siswa'));
+        $siswa = Siswa::when($search, function ($query, $search) {
+            $query->where('nama_siswa', 'like', '%' . $search . '%')
+                ->orWhere('nisn', 'like', '%' . $search . '%')
+                ->orWhere('tahun_masuk', 'like', '%' . $search . '%');
+        })
+        ->orderBy('nama_siswa', 'asc')
+        ->paginate(10)
+        ->withQueryString();
+
+        return view('admin.siswa.siswa', compact('siswa', 'search'));
     }
 
     /**
@@ -52,24 +62,48 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Siswa $siswa)
+    public function show($id)
     {
-        //
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $siswa = Siswa::findOrFail($id);
+
+        return view('admin.siswa.show', compact('siswa'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Siswa $siswa)
+    public function edit($id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $siswa = Siswa::findOrFail($id);
+
         return view('admin.siswa.edit', compact('siswa'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $siswa = Siswa::findOrFail($id);
+
         $request->validate([
             'nisn' => 'required|max:10',
             'nama_siswa' => 'required|max:40',
@@ -92,8 +126,16 @@ class SiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $siswa = Siswa::findOrFail($id);
+
         $siswa->delete();
 
         return redirect()

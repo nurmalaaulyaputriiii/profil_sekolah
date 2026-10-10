@@ -5,51 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Pengumuman;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
+
 class PengumumanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+
         $pengumuman = Pengumuman::with('user')
+            ->when($search, function ($query, $search) {
+                $query->where('judul', 'like', '%' . $search . '%');
+            })
             ->orderBy('id_pengumuman', 'desc')
             ->get();
 
-        return view(
-            'admin.pengumuman.pengumuman',
-            compact('pengumuman')
-        );
+        return view('admin.pengumuman.pengumuman', compact('pengumuman', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $users = User::all();
 
-        return view(
-            'admin.pengumuman.create',
-            compact('users')
-        );
+        return view('admin.pengumuman.create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $slug = Str::slug($request->judul);
+        $request->merge(['slug' => $slug]);
+
         $request->validate([
             'judul' => 'required|string|max:50',
             'isi' => 'required|string',
             'tanggal' => 'required|date',
             'status' => 'required|in:Publish,Draft',
             'id_user' => 'required|exists:user,id_user',
+            'slug' => 'required|unique:pengumumen,slug'
         ]);
 
         Pengumuman::create([
             'judul' => $request->judul,
+            'slug' => $request->slug,
             'isi' => $request->isi,
             'tanggal' => $request->tanggal,
             'status' => $request->status,
@@ -58,32 +56,33 @@ class PengumumanController extends Controller
 
         return redirect()
             ->route('admin.pengumuman.pengumuman')
-            ->with(
-                'success',
-                'Pengumuman berhasil ditambahkan!'
-            );
+            ->with('success', 'Pengumuman berhasil ditambahkan!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        $pengumuman = Pengumuman::findOrFail($id);
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
 
+        $pengumuman = Pengumuman::where('id_pengumuman', $id)->firstOrFail();
         $users = User::all();
 
-        return view(
-            'admin.pengumuman.edit',
-            compact('pengumuman', 'users')
-        );
+        return view('admin.pengumuman.edit', compact('pengumuman', 'users'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $pengumuman = Pengumuman::where('id_pengumuman', $id)->firstOrFail();
+
         $request->validate([
             'judul' => 'required|string|max:50',
             'isi' => 'required|string',
@@ -91,8 +90,6 @@ class PengumumanController extends Controller
             'status' => 'required|in:Publish,Draft',
             'id_user' => 'required|exists:user,id_user',
         ]);
-
-        $pengumuman = Pengumuman::findOrFail($id);
 
         $pengumuman->update([
             'judul' => $request->judul,
@@ -104,26 +101,22 @@ class PengumumanController extends Controller
 
         return redirect()
             ->route('admin.pengumuman.pengumuman')
-            ->with(
-                'success',
-                'Pengumuman berhasil diperbarui!'
-            );
+            ->with('success', 'Pengumuman berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        $pengumuman = Pengumuman::findOrFail($id);
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Exception $e) {
+            abort(404);
+        }
 
+        $pengumuman = Pengumuman::where('id_pengumuman', $id)->firstOrFail();
         $pengumuman->delete();
 
         return redirect()
             ->route('admin.pengumuman.pengumuman')
-            ->with(
-                'success',
-                'Pengumuman berhasil dihapus!'
-            );
+            ->with('success', 'Pengumuman berhasil dihapus!');
     }
 }

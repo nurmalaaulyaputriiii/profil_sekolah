@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('beritas', function (Blueprint $table) {
             $table->increments('id_berita');
             $table->string('judul', 50);
+            $table->text('slug')->unique();
             $table->text('isi');
             $table->date('tanggal');
             $table->string('gambar', 100)->nullable();
             $table->enum('status', ['Publish', 'Draft']);
-
             $table->unsignedInteger('id_user');
 
             $table->foreign('id_user')

@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profil extends Model
 {
-    protected $table = 'profil';
+    protected $table = 'profil_sekolah';
 
     protected $primaryKey = 'id_profil';
 
-    public $incrementing = true;
-
-    protected $keyType = 'int';
+    public $timestamps = false;
 
     protected $fillable = [
         'nama_sekolah',
@@ -25,9 +23,5 @@ class Profil extends Model
         'visi_misi',
         'tahun_berdiri',
         'deskripsi',
-    ];
-
-    protected $casts = [
-        'tahun_berdiri' => 'integer',
     ];
 }

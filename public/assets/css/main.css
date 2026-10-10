@@ -3276,215 +3276,6 @@ span.flatpickr-weekday {
     color: #8b9692;
 }
 
-/* =========================================
-   THEME WHITE & GREY
-   ========================================= */
-
-/* Background utama */
-body {
-    background-color: #f5f6f8 !important;
-}
-
-
-/* ===============================
-   SIDEBAR
-   =============================== */
-
-.sidebar-wrapper {
-    background: linear-gradient(180deg, #343a40 0%, #212529 100%) !important;
-}
-
-.sidebar-brand {
-    color: #ffffff !important;
-}
-
-.sidebar-brand i {
-    color: #d1d5db !important;
-}
-
-.sidebar-menu-title {
-    color: #9ca3af !important;
-}
-
-.sidebar-menu-link {
-    color: #e5e7eb !important;
-}
-
-.sidebar-menu-link:hover {
-    background-color: rgba(255, 255, 255, 0.10) !important;
-    color: #ffffff !important;
-}
-
-.sidebar-menu-link.active {
-    background-color: #e5e7eb !important;
-    color: #1f2937 !important;
-}
-
-.sidebar-menu-link.active i {
-    color: #1f2937 !important;
-}
-
-
-/* ===============================
-   NAVBAR
-   =============================== */
-
-.navbar-custom {
-    background-color: #ffffff !important;
-    border-bottom: 1px solid #e5e7eb !important;
-}
-
-
-/* Search */
-
-.navbar-search-wrapper {
-    background-color: #f8f9fa !important;
-    border: 1px solid #e5e7eb !important;
-}
-
-.navbar-search-input {
-    color: #374151 !important;
-}
-
-.navbar-search-input::placeholder {
-    color: #9ca3af !important;
-}
-
-.navbar-search-btn {
-    color: #6b7280 !important;
-}
-
-
-/* ===============================
-   BUTTON CREATE
-   =============================== */
-
-.btn-quick-action {
-    background-color: #4b5563 !important;
-    color: #ffffff !important;
-}
-
-.btn-quick-action:hover {
-    background-color: #374151 !important;
-}
-
-
-/* ===============================
-   ICON NAVBAR
-   =============================== */
-
-.navbar-action-btn {
-    background-color: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
-    color: #6b7280 !important;
-}
-
-.navbar-action-btn:hover {
-    background-color: #f3f4f6 !important;
-    color: #374151 !important;
-}
-
-
-/* ===============================
-   PROFILE
-   =============================== */
-
-.navbar-profile-btn {
-    color: #374151 !important;
-}
-
-.navbar-profile-caret {
-    color: #6b7280 !important;
-}
-
-
-/* ===============================
-   DROPDOWN
-   =============================== */
-
-.dropdown-menu {
-    border-color: #e5e7eb !important;
-}
-
-.dropdown-item:hover {
-    background-color: #f3f4f6 !important;
-    color: #374151 !important;
-}
-
-
-/* ===============================
-   CARD
-   =============================== */
-
-.card {
-    border-color: #e5e7eb !important;
-}
-
-.card-title,
-.stat-label {
-    color: #374151 !important;
-}
-
-
-/* ===============================
-   ACCENT GREY
-   =============================== */
-
-.bg-forest-light {
-    background-color: #f3f4f6 !important;
-}
-
-.bg-forest-medium {
-    background-color: #6b7280 !important;
-}
-
-.bg-lime-accent {
-    background-color: #9ca3af !important;
-}
-
-.text-lime {
-    color: #6b7280 !important;
-}
-
-.text-main {
-    color: #374151 !important;
-}
-
-
-/* ===============================
-   PROGRESS BAR
-   =============================== */
-
-.progress-bar.bg-lime-accent {
-    background-color: #9ca3af !important;
-}
-
-
-/* ===============================
-   FOOTER
-   =============================== */
-
-.footer-custom {
-    background-color: #f5f6f8 !important;
-    border-top: 1px solid #e5e7eb !important;
-}
-
-.footer-logo {
-    color: #4b5563 !important;
-}
-
-.footer-logo i {
-    color: #6b7280 !important;
-}
-
-.footer-link {
-    color: #6b7280 !important;
-}
-
-.footer-link:hover {
-    color: #374151 !important;
-}
-
 .form-control-custom, .form-select-custom {
     width: 100%;
     background-color: #FFFFFF;
@@ -3509,3 +3300,1082 @@ body {
     margin-bottom: 0.5rem;
     display: inline-block;
 }
+
+
+
+/* =====================================
+   SIDEBAR PROFIL SEKOLAH
+   Desain seperti template Voler
+===================================== */
+
+:root {
+    --sidebar-width: 250px;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #60738a;
+    --sidebar-heading: #7c8795;
+    --sidebar-blue: #435ebe;
+    --sidebar-blue-light: #eaf2ff;
+    --sidebar-border: #edf0f5;
+}
+
+/* SIDEBAR UTAMA */
+.sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 1040;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+}
+
+/* BRAND / LOGO */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    min-height: 80px;
+    padding: 12px 20px;
+    margin-bottom: 0;
+    text-decoration: none !important;
+    background: #ffffff;
+    color: var(--sidebar-blue) !important;
+    border-bottom: none;
+    flex-shrink: 0;
+}
+
+.sidebar-brand img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    margin: 0;
+}
+
+.sidebar-brand span {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--sidebar-blue);
+    white-space: nowrap;
+}
+
+.sidebar-brand:hover {
+    color: var(--sidebar-blue) !important;
+}
+
+/* AREA MENU SIDEBAR */
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0 20px;
+}
+
+/* SCROLLBAR */
+.sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: #dce3ef;
+    border-radius: 10px;
+}
+
+/* KELOMPOK MENU */
+.sidebar-menu-section {
+    margin-top: 10px;
+    padding: 0;
+}
+
+/* JUDUL KATEGORI */
+.sidebar-menu-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sidebar-heading);
+    padding: 0 25px;
+    margin-bottom: 6px;
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+}
+
+/* LIST MENU */
+.sidebar-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu-item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* LINK MENU */
+.sidebar-menu-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 40px;
+    padding: 10px 25px;
+    color: var(--sidebar-text) !important;
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none !important;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+/* IKON MENU */
+.sidebar-menu-link i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    min-width: 16px;
+    font-size: 15px;
+    color: #435ebe;
+    transition: all 0.2s ease;
+}
+
+/* TEKS MENU */
+.sidebar-menu-link span {
+    white-space: nowrap;
+}
+
+/* HOVER MENU */
+.sidebar-menu-link:hover {
+    background: #f5f8ff;
+    color: var(--sidebar-blue) !important;
+    border-left-color: #c9d9ff;
+}
+
+.sidebar-menu-link:hover i {
+    color: var(--sidebar-blue);
+}
+
+/* MENU AKTIF */
+.sidebar-menu-link.active {
+    background: var(--sidebar-blue-light);
+    color: var(--sidebar-blue) !important;
+    border-left-color: #57a6ff;
+    font-weight: 500;
+}
+
+.sidebar-menu-link.active i {
+    color: #435ebe;
+}
+
+/* =====================================
+   MAIN CONTENT DAN NAVBAR
+===================================== */
+
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: all 0.3s ease;
+    background: #f8faff;
+}
+
+/* NAVBAR */
+.navbar-custom {
+    min-height: 70px;
+    padding: 0 25px;
+    background: #ffffff !important;
+    border-bottom: 1px solid #edf0f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* TOMBOL TOGGLE */
+.sidebar-toggle-btn,
+.btn-desktop-toggle {
+    border: none;
+    background: transparent;
+    color: #60738a;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.sidebar-toggle-btn:hover,
+.btn-desktop-toggle:hover {
+    color: var(--sidebar-blue);
+}
+
+/* SEARCH NAVBAR */
+.navbar-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: #f5f7fb;
+    border: 1px solid #edf0f5;
+    border-radius: 6px;
+    padding: 0 12px;
+    max-width: 320px;
+    width: 100%;
+}
+
+.navbar-search-input {
+    width: 100%;
+    height: 38px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #60738a;
+    font-size: 13px;
+}
+
+.navbar-search-btn {
+    border: none;
+    background: transparent;
+    color: #60738a;
+}
+
+/* PROFIL NAVBAR */
+.navbar-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: transparent;
+    color: #60738a;
+    font-size: 13px;
+}
+
+.navbar-profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #eaf2ff;
+    color: var(--sidebar-blue);
+    font-size: 18px;
+}
+
+/* FOOTER */
+.footer-custom {
+    min-height: 60px;
+    padding: 20px 25px;
+    border-top: 1px solid #edf0f5;
+    color: #7c8795;
+    font-size: 12px;
+}
+
+.footer-copy strong {
+    color: var(--sidebar-blue);
+}
+
+/* =====================================
+   SIDEBAR COLLAPSE DESKTOP
+===================================== */
+
+body.sidebar-collapsed .sidebar-wrapper {
+    width: 80px;
+}
+
+body.sidebar-collapsed .sidebar-brand {
+    justify-content: center;
+    padding: 12px 10px;
+}
+
+body.sidebar-collapsed .sidebar-brand span,
+body.sidebar-collapsed .sidebar-menu-title,
+body.sidebar-collapsed .sidebar-menu-link span {
+    display: none;
+}
+
+body.sidebar-collapsed .sidebar-menu-link {
+    justify-content: center;
+    padding: 12px 10px;
+    gap: 0;
+}
+
+body.sidebar-collapsed .sidebar-menu-link i {
+    font-size: 18px;
+}
+
+body.sidebar-collapsed .main-wrapper {
+    margin-left: 80px;
+}
+
+/* =====================================
+   RESPONSIVE MOBILE
+===================================== */
+
+@media (max-width: 1199px) {
+
+    .sidebar-wrapper {
+        transform: translateX(-100%);
+        width: 250px;
+    }
+
+    body.sidebar-mobile-active .sidebar-wrapper {
+        transform: translateX(0);
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+    }
+
+    .navbar-custom {
+        padding: 0 15px;
+    }
+
+    .navbar-search-wrapper {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .sidebar-wrapper {
+        width: 250px;
+    }
+
+    .sidebar-brand {
+        min-height: 80px;
+        padding: 12px 20px;
+    }
+
+    .sidebar-menu-link {
+        padding: 10px 20px;
+    }
+
+    .footer-custom {
+        padding: 15px;
+    }
+}
+
+/* =========================================
+   DASHBOARD PROFIL SEKOLAH
+   Voler Style - White & Blue
+========================================= */
+
+.dashboard-page {
+    padding: 28px 20px 50px;
+    background: #f7f8fc;
+    min-height: calc(100vh - 70px);
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #435ebe 0%, #536dfe 100%);
+    border-radius: 18px;
+    padding: 32px 36px;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(67, 94, 190, 0.15);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+}
+
+.hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.85;
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    margin: 0 0 8px;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.hero-description {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.88;
+    max-width: 600px;
+}
+
+.hero-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.hero-avatar {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+.hero-user-name {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hero-user-role {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.hero-decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hero-circle:nth-child(1) {
+    width: 280px;
+    height: 280px;
+    right: -80px;
+    top: -130px;
+}
+
+.hero-circle:nth-child(2) {
+    width: 190px;
+    height: 190px;
+    right: 100px;
+    bottom: -120px;
+}
+
+.hero-big-icon {
+    position: absolute;
+    right: 65px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 95px;
+    opacity: 0.08;
+}
+
+/* =========================================
+   SECTION HEADING
+========================================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0 16px;
+}
+
+.section-heading h5 {
+    margin: 0;
+    color: #25396f;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.section-heading p {
+    margin: 4px 0 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+/* =========================================
+   STAT CARD
+========================================= */
+
+.dashboard-stat {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    min-height: 185px;
+    padding: 22px;
+    border-radius: 16px;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid #edf0f6;
+    box-shadow: 0 5px 18px rgba(40, 55, 80, 0.05);
+    transition: all 0.25s ease;
+}
+
+.dashboard-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(40, 55, 80, 0.1);
+}
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.stat-arrow {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    transition: 0.25s ease;
+}
+
+.dashboard-stat:hover .stat-arrow {
+    transform: translate(2px, -2px);
+}
+
+.stat-number {
+    margin-top: 18px;
+    color: #25396f;
+    font-size: 29px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    margin-top: 7px;
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stat-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 19px;
+    padding-top: 13px;
+    border-top: 1px solid #f0f1f5;
+    color: #9299a8;
+    font-size: 11px;
+}
+
+.stat-bottom i {
+    font-size: 12px;
+}
+
+/* =========================================
+   STAT COLORS
+========================================= */
+
+.stat-blue .stat-icon {
+    background: #eaf2ff;
+    color: #435ebe;
+}
+
+.stat-blue .stat-arrow {
+    background: #eaf2ff;
+    color: #435ebe;
+}
+
+.stat-green .stat-icon {
+    background: #e9f9f0;
+    color: #2ca87f;
+}
+
+.stat-green .stat-arrow {
+    background: #e9f9f0;
+    color: #2ca87f;
+}
+
+.stat-orange .stat-icon {
+    background: #fff3e6;
+    color: #f39c12;
+}
+
+.stat-orange .stat-arrow {
+    background: #fff3e6;
+    color: #f39c12;
+}
+
+.stat-purple .stat-icon {
+    background: #f2edff;
+    color: #8a63d2;
+}
+
+.stat-purple .stat-arrow {
+    background: #f2edff;
+    color: #8a63d2;
+}
+
+/* =========================================
+   DASHBOARD PANEL
+========================================= */
+
+.dashboard-panel {
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #edf0f6;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(40, 55, 80, 0.04);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f1f5;
+}
+
+.panel-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.panel-title-wrapper h6 {
+    margin: 0;
+    color: #25396f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.panel-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.panel-icon.blue {
+    background: #eaf2ff;
+    color: #435ebe;
+}
+
+.panel-icon.green {
+    background: #e9f9f0;
+    color: #2ca87f;
+}
+
+.panel-icon.orange {
+    background: #fff3e6;
+    color: #f39c12;
+}
+
+.panel-link {
+    color: #435ebe;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.panel-link:hover {
+    color: #2f49a0;
+}
+
+/* =========================================
+   PANEL BODY
+========================================= */
+
+.panel-body {
+    padding: 6px 20px 14px;
+}
+
+/* =========================================
+   GURU ITEM
+========================================= */
+
+.teacher-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid #f2f3f6;
+}
+
+.teacher-item:last-child {
+    border-bottom: 0;
+}
+
+.teacher-photo {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    overflow: hidden;
+    border-radius: 11px;
+    background: #eef1f7;
+}
+
+.teacher-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teacher-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.teacher-name {
+    display: block;
+    overflow: hidden;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teacher-mapel {
+    display: block;
+    margin-top: 3px;
+    overflow: hidden;
+    color: #98a1b2;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.teacher-badge {
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: #eaf2ff;
+    color: #435ebe;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+/* =========================================
+   QUICK MENU
+========================================= */
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 16px;
+}
+
+.quick-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px;
+    border: 1px solid #edf0f6;
+    border-radius: 11px;
+    color: #344054;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.quick-card:hover {
+    border-color: #dce4ff;
+    background: #fafbff;
+    transform: translateY(-2px);
+}
+
+.quick-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.quick-icon.blue {
+    background: #eaf2ff;
+    color: #435ebe;
+}
+
+.quick-icon.green {
+    background: #e9f9f0;
+    color: #2ca87f;
+}
+
+.quick-icon.orange {
+    background: #fff3e6;
+    color: #f39c12;
+}
+
+.quick-icon.purple {
+    background: #f2edff;
+    color: #8a63d2;
+}
+
+.quick-card span {
+    flex: 1;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.quick-arrow {
+    color: #a4abba;
+    font-size: 11px;
+}
+
+/* =========================================
+   BERITA
+========================================= */
+
+.news-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 0;
+    border-bottom: 1px solid #f2f3f6;
+}
+
+.news-item:last-child {
+    border-bottom: 0;
+}
+
+.news-number {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    border-radius: 9px;
+    background: #f4f6fb;
+    color: #435ebe;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.news-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.news-content strong {
+    display: block;
+    overflow: hidden;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.news-content small {
+    display: block;
+    margin-top: 4px;
+    color: #98a1b2;
+    font-size: 10px;
+}
+
+.news-arrow {
+    color: #a4abba;
+    font-size: 12px;
+}
+
+/* =========================================
+   PENGUMUMAN
+========================================= */
+
+.announcement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid #f2f3f6;
+}
+
+.announcement-item:last-child {
+    border-bottom: 0;
+}
+
+.announcement-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 35px;
+    border-radius: 9px;
+    background: #fff3e6;
+    color: #f39c12;
+    font-size: 14px;
+}
+
+.announcement-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.announcement-content strong {
+    display: block;
+    overflow: hidden;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.announcement-content small {
+    display: block;
+    margin-top: 4px;
+    color: #98a1b2;
+    font-size: 10px;
+}
+
+.announcement-arrow {
+    color: #a4abba;
+    font-size: 12px;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.dashboard-empty {
+    padding: 30px 15px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    border-radius: 12px;
+    background: #f4f6fb;
+    color: #a4abba;
+    font-size: 18px;
+}
+
+.dashboard-empty p {
+    margin: 0;
+    color: #98a1b2;
+    font-size: 11px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991.98px) {
+    .dashboard-page {
+        padding: 22px 15px 40px;
+    }
+
+    .dashboard-hero {
+        padding: 28px;
+    }
+
+    .hero-big-icon {
+        right: 30px;
+        font-size: 75px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-hero {
+        padding: 24px 20px;
+    }
+
+    .hero-title {
+        font-size: 22px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+    }
+
+    .hero-big-icon {
+        display: none;
+    }
+
+    .section-heading {
+        margin-top: 24px;
+    }
+
+    .dashboard-stat {
+        min-height: 165px;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-page {
+        padding: 18px 12px 30px;
+    }
+
+    .dashboard-hero {
+        border-radius: 14px;
+        padding: 22px 18px;
+    }
+
+    .hero-title {
+        font-size: 20px;
+    }
+
+    .hero-user {
+        margin-top: 17px;
+    }
+
+    .dashboard-stat {
+        border-radius: 13px;
+    }
+
+    .panel-header {
+        padding: 16px;
+    }
+
+    .panel-body {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+/* Posisi logo dan nama sekolah di tengah sidebar */
+.sidebar-brand {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
