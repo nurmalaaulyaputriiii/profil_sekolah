@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\User;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class BeritaController extends Controller
 {
@@ -52,11 +53,11 @@ class BeritaController extends Controller
             'tanggal' => 'required|date',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:Publish,Draft',
-            'id_user' => 'required|exists:user,id_user',
             'slug' => 'required|unique:beritas,slug'
         ]);
 
-        $data = $request->except('gambar');
+        $data = $request->except(['gambar', 'id_user']);
+        $data['id_user'] = Auth::user()->id_user;
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')
@@ -81,10 +82,21 @@ class BeritaController extends Controller
             abort(404);
         }
 
-        $berita = Berita::with('user')
-            ->findOrFail($id);
+        $berita = Berita::with('user')->findOrFail($id);
 
         return view('admin.berita.show', compact('berita'));
+    }
+
+    /**
+     * Check access to the specified resource.
+     */
+    private function cekAkses(Berita $berita)
+    {
+        $user = Auth::user();
+
+        if ($user->role !== 'Admin' && $berita->id_user != $user->id_user) {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
     }
 
     /**
@@ -99,6 +111,7 @@ class BeritaController extends Controller
         }
 
         $berita = Berita::findOrFail($id);
+        $this->cekAkses($berita);
         $users = User::all();
 
         return view(
@@ -119,6 +132,7 @@ class BeritaController extends Controller
         }
 
         $berita = Berita::findOrFail($id);
+        $this->cekAkses($berita);
 
         $request->validate([
             'judul' => 'required|string|max:50',
@@ -126,10 +140,9 @@ class BeritaController extends Controller
             'tanggal' => 'required|date',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:Publish,Draft',
-            'id_user' => 'required|exists:user,id_user',
         ]);
 
-        $data = $request->except('gambar');
+        $data = $request->except(['gambar', 'id_user']);
 
         if ($request->hasFile('gambar')) {
             if ($berita->gambar) {
@@ -159,6 +172,7 @@ class BeritaController extends Controller
         }
 
         $berita = Berita::findOrFail($id);
+        $this->cekAkses($berita);
 
         if ($berita->gambar) {
             Storage::disk('public')->delete($berita->gambar);
