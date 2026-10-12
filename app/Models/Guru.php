@@ -19,5 +19,15 @@ class Guru extends Model
         'nip',
         'mapel',
         'foto',
+        'id_mapel',
     ];
+
+    public function mataPelajaran()
+    {
+        return $this->belongsTo(
+            MataPelajaran::class,
+            'id_mapel',
+            'id_mapel'
+        );
+    }
 }

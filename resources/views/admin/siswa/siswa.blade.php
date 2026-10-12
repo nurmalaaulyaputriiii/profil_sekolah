@@ -100,6 +100,7 @@
                         <th>Jenis Kelamin</th>
                         <th>Tahun Masuk</th>
 
+
                         {{-- AKSI: ADMIN SAJA --}}
                         @if(auth()->user()->role == 'Admin')
                             <th width="15%">Aksi</th>

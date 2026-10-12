@@ -11,12 +11,13 @@ use App\Models\Prestasi;
 use App\Models\Profil;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
     public function index()
     {
-        $profil = Profil::first(); 
+        $profil = Profil::first();
         $guru = Guru::latest('id_guru')->get();
         $prestasi = Prestasi::latest('id_prestasi')->get();
         $ekstrakurikuler = Ekstrakurikuler::latest('id_ekskul')->get();
@@ -160,4 +161,19 @@ class LandingController extends Controller
 
         return view('landing.pengumumandetail', compact('profil', 'pengumuman'));
     }
+
+
+public function siswa()
+{
+    $siswa = \App\Models\Siswa::orderBy('nama_siswa', 'asc')->paginate(10);
+    $jumlahSiswa = \App\Models\Siswa::count();
+    $profil = \App\Models\Profil::first();
+
+    return view('landing.siswa', compact('siswa', 'jumlahSiswa', 'profil'));
+}
+public function profilSaya()
+{
+    $profil = \App\Models\Profil::first();
+    return view('landing.Profilsaya',compact('profil'));
+}
 }

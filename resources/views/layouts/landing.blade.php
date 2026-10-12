@@ -71,6 +71,16 @@
                     Pengumuman
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('landing.siswa') }}" class="nav-link fw-semibold px-3 {{ request()->routeIs('landing.siswa*') ? 'active' : '' }}">
+                    Siswa
+                </a>
+            </li>
+            <li class="nav-item">
+    <a href="{{ route('landing.profil-saya') }}" class="nav-link fw-semibold px-3 {{ request()->routeIs('landing.profil-saya') ? 'active' : '' }}">
+        Profil Saya
+    </a>
+</li>
         </ul>
         </div>
     </div>

@@ -18,10 +18,15 @@ class Siswa extends Model
         'nisn',
         'nama_siswa',
         'jenis_kelamin',
+        'id_kelas',
         'tahun_masuk',
     ];
 
     protected $casts = [
         'tahun_masuk' => 'integer',
     ];
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'id_kelas', 'id_kelas');
+    }
 }

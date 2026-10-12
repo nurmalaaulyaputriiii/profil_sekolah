@@ -27,6 +27,10 @@ Route::get('/publik/ekstrakurikuler/{id}', [LandingController::class, 'ekstrakur
 Route::get('/publik/berita/{id}', [LandingController::class, 'beritaDetail'])->name('landing.berita.detail');
 Route::get('/publik/galeri/{id}', [LandingController::class, 'galeriDetail'])->name('landing.galeri.detail');
 Route::get('/publik/pengumuman/{id}', [LandingController::class, 'pengumumanDetail'])->name('landing.pengumuman.detail');
+Route::get('/publik/siswa', [LandingController::class, 'siswa'])->name('landing.siswa');
+Route::get('/publik/profil-saya', [LandingController::class, 'profilSaya'])->name('landing.profil-saya');
+// Route::view('/Profilsaya', 'profilsaya')->name('profilsaya');
+
 // Login dan logout
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');

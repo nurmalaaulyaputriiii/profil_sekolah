@@ -18,7 +18,8 @@ class SiswaController extends Controller
         $siswa = Siswa::when($search, function ($query, $search) {
             $query->where('nama_siswa', 'like', '%' . $search . '%')
                 ->orWhere('nisn', 'like', '%' . $search . '%')
-                ->orWhere('tahun_masuk', 'like', '%' . $search . '%');
+                ->orWhere('tahun_masuk', 'like', '%' . $search . '%')
+                ->orWhere('id_kelas', 'like', '%' . $search . '%');
         })
         ->orderBy('nama_siswa', 'asc')
         ->paginate(10)
@@ -44,6 +45,7 @@ class SiswaController extends Controller
             'nisn' => 'required|max:10',
             'nama_siswa' => 'required|max:40',
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'id_kelas' => 'required|exists:kelas,id_kelas',
             'tahun_masuk' => 'required|integer',
         ]);
 
@@ -51,6 +53,7 @@ class SiswaController extends Controller
             'nisn' => $request->nisn,
             'nama_siswa' => $request->nama_siswa,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'id_kelas' => $request->kelas,
             'tahun_masuk' => $request->tahun_masuk,
         ]);
 
@@ -108,6 +111,7 @@ class SiswaController extends Controller
             'nisn' => 'required|max:10',
             'nama_siswa' => 'required|max:40',
             'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'kelas' => 'required|exists:kelas,id_kelas',
             'tahun_masuk' => 'required|integer',
         ]);
 
@@ -115,6 +119,7 @@ class SiswaController extends Controller
             'nisn' => $request->nisn,
             'nama_siswa' => $request->nama_siswa,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'id_kelas' => $request->kelas,
             'tahun_masuk' => $request->tahun_masuk,
         ]);
 
