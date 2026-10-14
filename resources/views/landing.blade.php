@@ -7,89 +7,16 @@
 <link href="{{ asset('assets/libs/aos-master/dist/aos.css') }}" rel="stylesheet">
 
 <style>
-.card-hover {
-    transition: transform .3s ease, box-shadow .3s ease;
-}
-.card-hover:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(36, 69, 143, .15) !important;
-}
-.card-hover img {
-    transition: transform .45s ease;
-}
-.card-hover:hover img {
-    transform: scale(1.05);
-}
-.card-hover .card-title {
-    transition: color .3s ease;
-}
-.card-hover:hover .card-title {
-    color: #24458f !important;
-}
-.btn-profil {
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.6);
-    transition:all .3s ease;
-}
-
-.btn-profil:hover {
-    background:#fff;
-    color:#24458f !important;
-    border-color:#fff;
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-
 .stat-item {
-    background:#ffffff !important;
-    min-height:160px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
-    color:#24458f;
-    transition:all .3s ease;
-}
-
-.stat-item:hover {
-    background:#ffffff !important;
-    transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(36,69,143,.12);
-}
-
-.stat-item::after {
-    content:"";
-    position:absolute;
-    top:-20px;
-    right:-18px;
-    width:34px;
-    height:210px;
-    background:#f5f7fb;
-    transform:skewX(-20deg);
-}
-
-.stat-content {
-    position:relative;
-    z-index:2;
-}
-
-.stat-item .display-6 {
-    color:#24458f !important;
-}
-
-.stat-item .fs-5 {
-    color:#53627a !important;
-}
-
-@media (max-width:991.98px) {
-    .stat-item {
-        min-height:140px;
-    }
-
-    .stat-item::after {
-        display:none;
-    }
+    background: white;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    color: #24458f;
+    transition: none;
 }
 </style>
 
@@ -98,11 +25,9 @@
          alt="SMAN 2 Singaparna"
          class="position-absolute top-0 start-0 w-100 h-100"
          style="object-fit:cover;">
-
     <div class="position-absolute top-0 start-0 w-100 h-100"
          style="background:linear-gradient(90deg,rgba(20,55,110,.85),rgba(20,55,110,.58),rgba(20,55,110,.20));">
     </div>
-
     <div class="container h-100 position-relative d-flex align-items-center">
         <div class="row">
             <div class="col-lg-8 col-xl-7 text-white">
@@ -111,21 +36,18 @@
                      style="color:#ffb45c;font-size:17px;letter-spacing:.5px;">
                     SMAN 2 Singaparna
                 </div>
-
                 <h1 class="fw-bold lh-1 mb-4"
                     data-aos="fade-up"
                     data-aos-delay="150"
                     style="font-size:clamp(38px,4.5vw,58px);">
                     Mewujudkan Generasi Unggul, Berkarakter, dan Berprestasi
                 </h1>
-
                 <p class="text-white-50 lh-base mb-4"
                    data-aos="fade-up"
                    data-aos-delay="300"
                    style="font-size:18px;max-width:680px;">
                     SMAN 2 Singaparna berkomitmen menyelenggarakan pendidikan berkualitas untuk membentuk peserta didik yang berakhlak mulia, berprestasi, kreatif, mandiri, dan siap menghadapi tantangan masa depan.
                 </p>
-
                 <div data-aos="fade-up" data-aos-delay="450">
                     <a href="#profil"
                        class="btn btn-profil fw-bold px-4 py-3 rounded-3 text-white">
@@ -153,7 +75,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-lg-3">
             <div class="stat-item text-center py-4 px-3 h-100"
                  data-aos="fade-up"
@@ -168,7 +89,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-lg-3">
             <div class="stat-item text-center py-4 px-3 h-100"
                  data-aos="fade-up"
@@ -183,7 +103,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-6 col-lg-3">
             <div class="stat-item text-center py-4 px-3 h-100"
                  data-aos="fade-up"

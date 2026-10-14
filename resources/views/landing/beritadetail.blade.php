@@ -1,5 +1,4 @@
 @extends('layouts.landing')
-@section('title', $berita->judul . ' - ' . ($profil->nama_sekolah ?? 'Profil Sekolah'))
 @section('content')
 <section class="py-5 bg-light">
     <div class="container py-lg-4">
